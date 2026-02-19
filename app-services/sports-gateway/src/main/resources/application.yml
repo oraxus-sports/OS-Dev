@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: 5000
 
 cognito:
   region: us-east-1 # set your region
