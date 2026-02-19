@@ -71,7 +71,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build Spring Boot
-        run: ./gradlew -p app-services clean build
+        run: ./gradlew -p app-services/sports-gateway clean build
 
       # -------------------------
       # Create Deployment Package
