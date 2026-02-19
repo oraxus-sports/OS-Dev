@@ -22,11 +22,27 @@ jobs:
           node-version: '18'
 
       - name: Install UI dependencies
-        working-directory: ui
+        working-directory: ui/mobile
+        run: npm install
+
+      - name: Install UI dependencies
+        working-directory: ui/lib
+        run: npm install
+
+      - name: Install UI dependencies
+        working-directory: ui/web
         run: npm install
 
       - name: Build React App
-        working-directory: ui
+        working-directory: ui/lib
+        run: npm run build
+
+      - name: Build React App
+        working-directory: ui/mobile
+        run: npm run build
+
+      - name: Build React App
+        working-directory: ui/web
         run: npm run build
 
       # -------------------------
