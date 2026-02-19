@@ -1,0 +1,77 @@
+name: Deploy to Elastic Beanstalk
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # -------------------------
+      # Build React UI
+      # -------------------------
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install UI dependencies
+        working-directory: ui
+        run: npm install
+
+      - name: Build React App
+        working-directory: ui
+        run: npm run build
+
+      # -------------------------
+      # Copy UI build into Spring Boot
+      # -------------------------
+      - name: Copy UI build to Spring Boot static folder
+        run: |
+          rm -rf app-service/src/main/resources/static/*
+          cp -r ui/build/* app-service/src/main/resources/static/
+
+      # -------------------------
+      # Build Spring Boot with Gradle
+      # -------------------------
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Make Gradle executable
+        run: chmod +x gradlew
+
+      - name: Build Spring Boot
+        run: ./gradlew clean build
+
+      # -------------------------
+      # Create Deployment Package
+      # -------------------------
+      - name: Prepare deployment zip
+        run: |
+          mkdir deploy
+          cp app-service/build/libs/*.jar deploy/application.jar
+          cd deploy
+          zip -r deploy.zip application.jar
+
+      # -------------------------
+      # Deploy to Elastic Beanstalk
+      # -------------------------
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: OSDev
+          environment_name: OSDev-env
+          version_label: ${{ github.sha }}
+          region: us-east-1
+          deployment_package: deploy/deploy.zip
