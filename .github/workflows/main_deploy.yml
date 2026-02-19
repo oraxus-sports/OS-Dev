@@ -47,8 +47,16 @@ jobs:
       # -------------------------
       - name: Copy UI build to Spring Boot static folder
         run: |
-          rm -rf app-services/sports-gateway/src/main/resources/static/*
-          cp -r ui/web/dist/* app-services/sports-gateway/src/main/resources/static/
+          # ensure target folder exists
+          mkdir -p app-services/sports-gateway/src/main/resources/static
+          # remove any existing files (no-op if none)
+          rm -rf app-services/sports-gateway/src/main/resources/static/* || true
+          # copy build output if present
+          if [ -d "ui/web/dist" ] && [ "$(ls -A ui/web/dist)" ]; then
+            cp -r ui/web/dist/* app-services/sports-gateway/src/main/resources/static/
+          else
+            echo "Warning: ui/web/dist is missing or empty — skipping copy"
+          fi
 
       # -------------------------
       # Build Spring Boot with Gradle
