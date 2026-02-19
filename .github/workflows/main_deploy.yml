@@ -78,8 +78,18 @@ jobs:
       # -------------------------
       - name: Prepare deployment zip
         run: |
-          mkdir deploy
-          cp app-services/sports-gateway/build/libs/*.jar deploy/application.jar
+          set -e
+          mkdir -p deploy
+          echo "Contents of app-services/sports-gateway/build/libs:" 
+          ls -la app-services/sports-gateway/build/libs || true
+          # find the first jar produced by the build
+          JAR=$(ls app-services/sports-gateway/build/libs/*.jar 2>/dev/null | head -n 1 || true)
+          if [ -z "$JAR" ]; then
+            echo "Error: no JAR found in app-services/sports-gateway/build/libs" >&2
+            exit 1
+          fi
+          echo "Found JAR: $JAR"
+          cp "$JAR" deploy/application.jar
           cd deploy
           zip -r deploy.zip application.jar
 
