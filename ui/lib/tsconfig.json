@@ -12,6 +12,10 @@
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "include": ["**/*.{ts,tsx}"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "index.ts"
+  ],
   "exclude": ["node_modules", "dist"]
 }
