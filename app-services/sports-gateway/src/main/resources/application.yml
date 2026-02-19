@@ -12,5 +12,5 @@ cognito:
   clientIdMobile: "" # set your mobile app client id (no secret)
   # clientId: ""   # legacy single client id (optional)
 
-user-service:
-  url: http://localhost:8080 # user service base URL
+#user-service:
+ # url: http://localhost:8080 # user service base URL
