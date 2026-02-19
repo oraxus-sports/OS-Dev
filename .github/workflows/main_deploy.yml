@@ -35,11 +35,11 @@ jobs:
         run: npm run build
 
       - name: Install Web App dependencies
-        working-directory: web
+        working-directory: ui/web
         run: npm install
 
       - name: Build Web App
-        working-directory: web
+        working-directory: ui/web
         run: npm run build
 
       # -------------------------
@@ -48,7 +48,7 @@ jobs:
       - name: Copy UI build to Spring Boot static folder
         run: |
           rm -rf app-services/sports-gateway/src/main/resources/static/*
-          cp -r web/dist/* app-services/sports-gateway/src/main/resources/static/
+          cp -r ui/web/dist/* app-services/sports-gateway/src/main/resources/static/
 
       # -------------------------
       # Build Spring Boot with Gradle
