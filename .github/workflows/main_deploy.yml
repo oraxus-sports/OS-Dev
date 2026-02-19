@@ -93,6 +93,36 @@ jobs:
           cd deploy
           zip -r deploy.zip application.jar
 
+      - name: Configure AWS credentials for preflight
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: EB preflight: verify application and environment exist
+        run: |
+          set -e
+          APP_NAME="OSDev"
+          ENV_NAME="OSDev-env"
+          echo "Checking Elastic Beanstalk application: $APP_NAME"
+          APPS_COUNT=$(aws elasticbeanstalk describe-applications --application-names "$APP_NAME" --query 'Applications | length(@)')
+          if [ "$APPS_COUNT" -eq 0 ]; then
+            echo "Error: Elastic Beanstalk application '$APP_NAME' not found in region us-east-1." >&2
+            echo "Either create it manually or allow CI to create it. To create manually run:" >&2
+            echo "  aws elasticbeanstalk create-application --application-name $APP_NAME --region us-east-1" >&2
+            exit 1
+          fi
+          echo "Application exists. Checking environment: $ENV_NAME"
+          ENVS_COUNT=$(aws elasticbeanstalk describe-environments --application-name "$APP_NAME" --environment-names "$ENV_NAME" --query 'Environments | length(@)')
+          if [ "$ENVS_COUNT" -eq 0 ]; then
+            echo "Error: Environment '$ENV_NAME' not found for application '$APP_NAME' in region us-east-1." >&2
+            echo "Create it manually with a solution stack, for example:" >&2
+            echo "  aws elasticbeanstalk create-environment --application-name $APP_NAME --environment-name $ENV_NAME --solution-stack-name \"64bit Amazon Linux 2 v3.6.8 running Corretto 17\" --region us-east-1" >&2
+            exit 1
+          fi
+          echo "Elastic Beanstalk application and environment found. Proceeding to deploy."
+
       # -------------------------
       # Deploy to Elastic Beanstalk
       # -------------------------
@@ -107,3 +137,5 @@ jobs:
           version_label: ${{ github.run_id }}-${{ github.sha }}
           region: us-east-1
           deployment_package: deploy/deploy.zip
+          wait_for_environment_recovery: false
+
