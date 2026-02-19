@@ -71,8 +71,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build Spring Boot
-        working-directory: app-services
-        run: ../gradlew clean build
+        run: ./gradlew -p app-services clean build
 
       # -------------------------
       # Create Deployment Package
