@@ -50,8 +50,8 @@ jobs:
       # -------------------------
       - name: Copy UI build to Spring Boot static folder
         run: |
-          rm -rf app-service/src/main/resources/static/*
-          cp -r ui/build/* app-service/src/main/resources/static/
+          rm -rf app-services/sports-gateway/src/main/resources/static/*
+          cp -r ui/web/dist/* app-services/sports-gateway/src/main/resources/static/
 
       # -------------------------
       # Build Spring Boot with Gradle
@@ -63,11 +63,11 @@ jobs:
           java-version: '17'
 
       - name: Make Gradle executable
-        working-directory: app-service
+        working-directory: app-services
         run: chmod +x gradlew
 
       - name: Build Spring Boot
-        working-directory: app-service
+        working-directory: app-services
         run: ./gradlew clean build
 
       # -------------------------
@@ -76,7 +76,7 @@ jobs:
       - name: Prepare deployment zip
         run: |
           mkdir deploy
-          cp app-service/build/libs/*.jar deploy/application.jar
+          cp app-services/sports-gateway/build/libs/*.jar deploy/application.jar
           cd deploy
           zip -r deploy.zip application.jar
 
