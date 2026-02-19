@@ -68,12 +68,11 @@ jobs:
           java-version: '17'
 
       - name: Make Gradle executable
-        working-directory: app-services
         run: chmod +x gradlew
 
       - name: Build Spring Boot
         working-directory: app-services
-        run: ./gradlew clean build
+        run: ../gradlew clean build
 
       # -------------------------
       # Create Deployment Package
