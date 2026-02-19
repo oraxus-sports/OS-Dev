@@ -30,6 +30,10 @@ jobs:
         working-directory: ui/lib
         run: npm install
 
+      - name: Build UI library
+        working-directory: ui/lib
+        run: npm run build
+
       - name: Install Web App dependencies
         working-directory: ui/web
         run: npm install

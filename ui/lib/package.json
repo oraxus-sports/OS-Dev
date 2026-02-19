@@ -2,11 +2,13 @@
   "name": "@sports-os/lib",
   "version": "1.0.0",
   "description": "Shared component library for sports management app",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "react": "^18.2.0",

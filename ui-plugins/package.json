@@ -7,7 +7,7 @@
     "start:components": "cd components && npm start",
     "start:auth": "cd auth && npm start",
     "start:platform": "cd platform && npm start",
-    "start:all": "concurrently \"npm:start:components\" \"npm:start:auth\" \"npm:start:platform\"",
+    "start:all": "concurrently \"npm run start:components\" \"npm run start:auth\" \"npm run start:platform\"",
     "build:components": "cd components && npm run build",
     "build:auth": "cd auth && npm run build",
     "build:platform": "cd platform && npm run build",

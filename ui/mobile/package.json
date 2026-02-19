@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "build": "echo \"@sports-os/mobile: no CI web build configured\""
   },
   "dependencies": {
     "@formatjs/intl-pluralrules": "^6.2.2",
