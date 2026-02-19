@@ -22,9 +22,11 @@ jobs:
           node-version: '18'
 
       - name: Install UI dependencies
+        working-directory: ui
         run: npm install
 
       - name: Build React App
+        working-directory: ui
         run: npm run build
 
       # -------------------------
@@ -45,9 +47,11 @@ jobs:
           java-version: '17'
 
       - name: Make Gradle executable
+        working-directory: app-service
         run: chmod +x gradlew
 
       - name: Build Spring Boot
+        working-directory: app-service
         run: ./gradlew clean build
 
       # -------------------------
