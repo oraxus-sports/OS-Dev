@@ -103,7 +103,7 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           bucket_name: ${{ secrets.AWS_S3_BUCKET }}
           application_name: OS-DevLabs
-          environment_name: OOS-DevLabs-env
+          environment_name: OS-DevLabs-env
           version_label: ${{ github.run_id }}-${{ github.sha }}
           region: us-east-1
           deployment_package: deploy/deploy.zip
