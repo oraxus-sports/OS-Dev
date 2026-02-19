@@ -9,6 +9,14 @@
     "web": "expo start --web",
     "build": "echo \"@sports-os/mobile: no CI web build configured\""
   },
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oraxus-sports/OS-Dev.git"
+  },
+  "engines": {
+    "node": "^18"
+  },
   "dependencies": {
     "@formatjs/intl-pluralrules": "^6.2.2",
     "@hookform/resolvers": "^3.3.3",

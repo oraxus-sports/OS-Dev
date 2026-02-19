@@ -31,4 +31,13 @@
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.3"
   }
+  ,
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oraxus-sports/OS-Dev.git"
+  },
+  "engines": {
+    "node": "^18"
+  }
 }

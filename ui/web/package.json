@@ -3,6 +3,14 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Sports management web application",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oraxus-sports/OS-Dev.git"
+  },
+  "engines": {
+    "node": "^18"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
